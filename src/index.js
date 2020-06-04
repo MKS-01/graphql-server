@@ -1,21 +1,20 @@
 import 'dotenv/config';
 import cors from 'cors';
-import express from 'express';
+import http from 'http';
 import jwt from 'jsonwebtoken';
+import express from 'express';
 import { ApolloServer, AuthenticationError } from 'apollo-server-express';
 
 import schema from './schema';
 import resolvers from './resolvers';
 import models, { sequelize } from './models';
 
-import http from 'http';
-
 const app = express();
 
 app.use(cors());
 
 const getMe = async (req) => {
-  const token = req.headers['token'];
+  const token = req.headers['x-token'];
 
   if (token) {
     try {
@@ -29,7 +28,6 @@ const getMe = async (req) => {
 const server = new ApolloServer({
   typeDefs: schema,
   resolvers,
-
   formatError: (error) => {
     // remove the internal sequelize error message
     // leave only the important validation error
@@ -42,7 +40,6 @@ const server = new ApolloServer({
       message,
     };
   },
-
   context: async ({ req, connection }) => {
     if (connection) {
       return {
@@ -67,10 +64,10 @@ server.applyMiddleware({ app, path: '/graphql' });
 const httpServer = http.createServer(app);
 server.installSubscriptionHandlers(httpServer);
 
-const eraseDatabaseOnSync = true;
+const isTest = !!process.env.TEST_DATABASE;
 
-sequelize.sync({ force: eraseDatabaseOnSync }).then(async () => {
-  if (eraseDatabaseOnSync) {
+sequelize.sync({ force: isTest }).then(async () => {
+  if (isTest) {
     createUsersWithMessages(new Date());
   }
 
