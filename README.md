@@ -24,6 +24,11 @@ Concept covers:
 
 - Custom scalars
 
+- Pagination
+
+  - Offset
+  - Cursor-based : Created Date
+
 ## How to Run
 
 Before running update .env in your root directive
