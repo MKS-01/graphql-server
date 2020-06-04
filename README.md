@@ -28,6 +28,7 @@ Concept covers:
 
   - Offset
   - Cursor-based : Created Date
+  - Cursor-based : Page-Info
 
 ## How to Run
 
