@@ -30,6 +30,8 @@ Concept covers:
   - Cursor-based : Created Date
   - Cursor-based : Page-Info
 
+- GraphQL Subscriptions
+
 ## How to Run
 
 Before running update .env in your root directive
