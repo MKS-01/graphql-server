@@ -22,6 +22,8 @@ Concept covers:
 
 - Apollo Server: Validation and Errors
 
+- Custom scalars
+
 ## How to Run
 
 Before running update .env in your root directive
